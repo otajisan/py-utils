@@ -54,7 +54,8 @@ def zip_directory(folder_path):
             for file_path in Path(sub_dir_path).iterdir():
                 if not file_path.is_file():
                     continue
-                zipf.write(file_path, arcname=file_path.name, compress_type=zipfile.ZIP_DEFLATED)
+                zipf.write(file_path, arcname=f'{sub_dir_path.name}/{file_path.name}',
+                           compress_type=zipfile.ZIP_DEFLATED)
 
     return zip_file_name
 
@@ -72,6 +73,6 @@ if __name__ == '__main__':
         print(f"Input zip file '{input_zip}' does not exist.")
         sys.exit(1)
 
-    output_dir = json_to_csv(input_zip)
+    output_dir = json_to_csv(input_dir_base, input_zip)
     result_zip_file_name = zip_directory(output_dir)
     print(f'Converted files are zipped into: {result_zip_file_name}')
